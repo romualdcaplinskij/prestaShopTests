@@ -23,6 +23,7 @@ public class TestSetup {
     public void setDriver(){
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(2000));
+        wait = new WebDriverWait(driver, Duration.ofMillis(2000));
         driver.manage().window().maximize();
         driver.get("http://192.168.1.126");
         softAssert = new SoftAssert();

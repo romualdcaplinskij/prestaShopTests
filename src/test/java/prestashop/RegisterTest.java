@@ -13,7 +13,7 @@ public class RegisterTest extends TestSetup{
     private final FakerUserDataGenerator userDataGenerator = new FakerUserDataGenerator();
     private final Map<String, String> userData = userDataGenerator.generateUserDataToMap();
 
-    @Test (priority = 1)
+    @Test (priority = -1)
     public void registerValidUser() throws IOException, InterruptedException {
         /*takes user data from FakerUserDataGenerator class. Runs registration test and saves valid
         user credentials to CSV file, that can be used for login tests*/
@@ -23,15 +23,15 @@ public class RegisterTest extends TestSetup{
         signInPage.clickCreateAccount();
         registerPage.chooseSocialTitleMr();
         registerPage.enterFirstName(userData.get("firstname"));
-        System.out.println(userData.get("firstname"));
+        //System.out.println(userData.get("firstname"));
         registerPage.enterLastName(userData.get("lastname"));
-        System.out.println(userData.get("lastname"));
+        //System.out.println(userData.get("lastname"));
         registerPage.enterEmail(userData.get("email"));
-        System.out.println(userData.get("email"));
+        //System.out.println(userData.get("email"));
         registerPage.enterPassword(userData.get("password"));
-        System.out.println(userData.get("password"));
+        //System.out.println(userData.get("password"));
         registerPage.enterBirthDate(userData.get("birthdate"));
-        System.out.println(userData.get("birthdate"));
+        //System.out.println(userData.get("birthdate"));
         registerPage.checkTermsAndCond();
         registerPage.checkPrivacyAgreement();
         registerPage.clickSaveForm();
@@ -40,13 +40,14 @@ public class RegisterTest extends TestSetup{
                  "Registered user name doesn't match");
     }
 
-    @Test (priority = 2)
+    @Test
     public void failTestRegisterValidUser() throws InterruptedException {
         /*takes user data from FakerUserDataGenerator class. Runs registration test and intentionally fails.
           To test if all functionality is working*/
 
         homePage.clickSignIn();
-        signInPage.clickCreateAccount();
+        wait.until(ExpectedConditions.elementToBeClickable(signInPage.createAccountButton)).click();
+        //signInPage.clickCreateAccount();
         registerPage.chooseSocialTitleMr();
         registerPage.enterFirstName(userData.get("firstname"));
         System.out.println(userData.get("firstname"));
@@ -67,13 +68,11 @@ public class RegisterTest extends TestSetup{
                 homePage.getLoggedUserNameAndLastname(), "Registered user name doesn't match");
     }
 
-
-
-
-    @Test (priority = 2)
+    @Test
     public void checkAlertIfFirstNameIsEmpty() throws InterruptedException {
         homePage.clickSignIn();
-        signInPage.clickCreateAccount();
+        wait.until(ExpectedConditions.elementToBeClickable(signInPage.createAccountButton)).click();
+        //signInPage.clickCreateAccount();
         registerPage.chooseSocialTitleMr();
         registerPage.enterFirstName("");
         System.out.println(userData.get("Empty space"));
@@ -90,12 +89,12 @@ public class RegisterTest extends TestSetup{
         registerPage.clickSaveForm();
 
         try {
-            alert = wait.until(ExpectedConditions.alertIsPresent());
-            String alertMessage = alert.getText();
-            alert.dismiss();
-            //check if alert is present if field is empty
-            softAssert.assertEquals(alertMessage,"Please fill out this field.", "\n Alerts doesn't match");
-            softAssert.assertAll();
+            //alert = wait.until(ExpectedConditions.alertIsPresent());
+            //String alertMessage = alert.getText();
+            String emptyFieldAlert = registerPage.getEmptyValidationMessageFirstname();
+            System.out.println("Validation message: " + emptyFieldAlert);
+            softAssert.assertEquals(emptyFieldAlert,"Please fill out this field.", "\n Alerts doesn't match");
+
         } catch (TimeoutException e) {
             System.out.println("\n Expected alert not found");
         }
@@ -103,5 +102,6 @@ public class RegisterTest extends TestSetup{
         //check if user is not logged in.
         Assert.assertNotEquals(userData.get("firstname") + " " + userData.get("lastname"),
                 homePage.getLoggedUserNameAndLastname(), "Registered user name doesn't match");
+        softAssert.assertAll();
     }
 }

@@ -1,6 +1,7 @@
 package prestashop;
 
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -48,6 +49,25 @@ public class RegisterPage extends BasePage{
 
     @FindBy (css = ".btn.btn-primary.float-xs-right.form-control-submit")
     WebElement saveFormButton;
+
+    @FindBy (css = "div:nth-of-type(2) > .col-md-3.form-control-comment")
+    WebElement firstNameEmptyFieldMessage;
+
+    public String getEmptyValidationMessageFirstname(){
+        // Locate the div that contains the pseudo-element
+        // Use JavaScript to get the content of the ::after pseudo-element
+        WebElement errorDiv = firstNameEmptyFieldMessage;
+        if (errorDiv == null) {
+            return "Error element not found";
+        }
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        String content =  (String) js.executeScript(
+                "return window.getComputedStyle(arguments[0], '::after').getPropertyValue('content');", errorDiv);
+        if (content == null || content.isEmpty() || "none".equals(content)) {
+            return "No validation message found";
+        }
+        return "No validation message found";
+    }
 
 
     public void chooseSocialTitleMr(){

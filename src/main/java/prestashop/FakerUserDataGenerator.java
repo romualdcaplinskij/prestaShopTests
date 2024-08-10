@@ -33,7 +33,7 @@ public class FakerUserDataGenerator {
 
     public String generateEmail(String firstname, String lastname) {
         return faker.internet()
-                .emailAddress(firstname.toLowerCase() +
+                .emailAddress("new" + firstname.toLowerCase() +
                         "." + lastname.toLowerCase());
     }
 

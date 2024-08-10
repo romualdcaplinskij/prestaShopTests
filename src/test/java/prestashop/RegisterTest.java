@@ -70,7 +70,7 @@ public class RegisterTest extends TestSetup{
 
 
 
-    @Test (priority = 3)
+    @Test (priority = 2)
     public void checkAlertIfFirstNameIsEmpty() throws InterruptedException {
         homePage.clickSignIn();
         signInPage.clickCreateAccount();

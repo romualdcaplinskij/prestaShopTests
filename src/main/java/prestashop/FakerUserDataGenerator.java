@@ -43,7 +43,11 @@ public class FakerUserDataGenerator {
     }
 
     public String generatePassword() {
-        return faker.internet().password(8, 10, true, true, true);
+        return faker.internet().password(9, 10, true, true, true);
+    }
+
+    public String generateWeakPassword() {
+        return faker.internet().password(6, 7, true, false, true);
     }
 
     public Map<String, String> generateUserDataToMap() {
@@ -52,6 +56,7 @@ public class FakerUserDataGenerator {
         userData.put("lastname", generateLastName());
         userData.put("email", generateEmail(firstname, lastname));
         userData.put("password", generatePassword());
+        userData.put("weakPassword", generateWeakPassword());
         userData.put("birthdate", generateBirthdate());
         return userData;
     }
@@ -77,11 +82,5 @@ public class FakerUserDataGenerator {
         }
     }
 
-    public static void main(String[] args) throws IOException {
-        FakerUserDataGenerator generator = new FakerUserDataGenerator();
-        Map<String, String> userData = generator.generateUserDataToMap();
-        generator.saveUserDataToCSV(userData, "src/test/resources/validUserData.csv");
-
-    }
 
 }

@@ -1,5 +1,6 @@
 package prestashop;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -47,6 +48,7 @@ public class RegisterPage extends BasePage{
 
     @FindBy (css = ".btn.btn-primary.float-xs-right.form-control-submit")
     WebElement saveFormButton;
+
 
     public void chooseSocialTitleMr(){
         radioButtonMr.click();

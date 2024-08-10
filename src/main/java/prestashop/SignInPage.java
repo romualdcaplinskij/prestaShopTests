@@ -1,8 +1,10 @@
 package prestashop;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class SignInPage extends BasePage{
     public SignInPage(WebDriver driver) {
@@ -21,7 +23,7 @@ public class SignInPage extends BasePage{
     @FindBy (css = "#submit-login")
     WebElement signInButton;
 
-    @FindBy (linkText = "No account? Create one here")
+    @FindBy (css = "[data-link-action='display-register-form']")
     WebElement createAccountButton;
 
     public void enterEmail (String email){
@@ -37,6 +39,7 @@ public class SignInPage extends BasePage{
     }
 
     public void clickCreateAccount() {
+        //wait.until(ExpectedConditions.visibilityOf(createAccountButton));
         createAccountButton.click();
     }
 

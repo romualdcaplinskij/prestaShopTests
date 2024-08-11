@@ -1,5 +1,6 @@
 package prestashop;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -38,6 +39,36 @@ public class SignInPage extends BasePage{
 
     public void clickCreateAccount() {
         createAccountButton.click();
+    }
+
+    public String getEmptyValidationMessageEmail(){
+        // Use JavaScript to get the content of the ::after pseudo-element
+        WebElement errorDiv = emailField;
+        if (errorDiv == null) {
+            return "Error element not found";
+        }
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        String content =  (String) js.executeScript(
+                "return window.getComputedStyle(arguments[0], '::after').getPropertyValue('content');", errorDiv);
+        if (content == null || content.isEmpty() || "none".equals(content)) {
+            return "No validation message found";
+        }
+        return "No validation message found";
+    }
+
+    public String getEmptyValidationMessagePassword(){
+        // Use JavaScript to get the content of the ::after pseudo-element
+        WebElement errorDiv = passwordField;
+        if (errorDiv == null) {
+            return "Error element not found";
+        }
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        String content =  (String) js.executeScript(
+                "return window.getComputedStyle(arguments[0], '::after').getPropertyValue('content');", errorDiv);
+        if (content == null || content.isEmpty() || "none".equals(content)) {
+            return "No validation message found";
+        }
+        return "No validation message found";
     }
 
 }

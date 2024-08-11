@@ -15,23 +15,25 @@ public class RegisterTest extends TestSetup{
 
     @Test (priority = -1)
     public void registerValidUser() throws IOException, InterruptedException {
-        /*takes user data from FakerUserDataGenerator class. Runs registration test and saves valid
-        user credentials to CSV file, that can be used for login tests*/
+        /*takes user data from FakerUserDataGenerator class, maps it. Runs registration test and saves valid
+        user credentials to CSV file, that can be used for login tests.
+        Priority is set to -1 to run this test first and create new user in CSV entry*/
         userDataGenerator.saveUserDataToCSV(userData, CSV_FILE_PATH);
 
         homePage.clickSignIn();
         signInPage.clickCreateAccount();
         registerPage.chooseSocialTitleMr();
         registerPage.enterFirstName(userData.get("firstname"));
-        //System.out.println(userData.get("firstname"));
         registerPage.enterLastName(userData.get("lastname"));
-        //System.out.println(userData.get("lastname"));
         registerPage.enterEmail(userData.get("email"));
-        //System.out.println(userData.get("email"));
         registerPage.enterPassword(userData.get("password"));
-        //System.out.println(userData.get("password"));
         registerPage.enterBirthDate(userData.get("birthdate"));
-        //System.out.println(userData.get("birthdate"));
+        System.out.println("Testing with: \n===============================================");
+        System.out.println("Firstname: " + userData.get("firstname"));
+        System.out.println("Lastname: " + userData.get("lastname"));
+        System.out.println("Email: " + userData.get("email"));
+        System.out.println("Strong password: " + userData.get("password"));
+        System.out.println("Birthdate: " + userData.get("birthdate"));
         registerPage.checkTermsAndCond();
         registerPage.checkPrivacyAgreement();
         registerPage.clickSaveForm();

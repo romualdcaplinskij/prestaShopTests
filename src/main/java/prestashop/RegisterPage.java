@@ -54,7 +54,6 @@ public class RegisterPage extends BasePage{
     WebElement firstNameEmptyFieldMessage;
 
     public String getEmptyValidationMessageFirstname(){
-        // Locate the div that contains the pseudo-element
         // Use JavaScript to get the content of the ::after pseudo-element
         WebElement errorDiv = firstNameEmptyFieldMessage;
         if (errorDiv == null) {

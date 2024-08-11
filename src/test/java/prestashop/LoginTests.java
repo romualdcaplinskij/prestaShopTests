@@ -8,13 +8,13 @@ import prestashop.CsvDataProvider;
 
 public class LoginTests extends TestSetup{
 
-    @Test(dataProvider = "randomLoginData", dataProviderClass = CsvDataProvider.class)
+    @Test(dataProvider = "randomLoginData", dataProviderClass = CsvDataProvider.class,
+            dependsOnMethods = {"prestashop.RegisterTest.registerValidUser"})
+    //Before running test it will run registerValidUser test just in case if test priority will be different.
     public void loginValidUser(String firstName, String lastName, String email, String password) {
         System.out.println("Testing login with: " + email + " / " + password);
 
-        // Simulate the login process
         homePage.clickSignIn();
-
         signInPage.enterEmail(email);
         signInPage.enterPassword(password);
         signInPage.clickSigIn();
@@ -26,29 +26,50 @@ public class LoginTests extends TestSetup{
 
     @Test(dataProvider = "randomLoginData", dataProviderClass = CsvDataProvider.class)
     public void loginIfEmailIsEmpty(String firstName, String lastName, String email, String password) {
-        System.out.println("Testing login with: " + email + " / " + password);
+        System.out.println("Testing login with: ' ' / " + password);
 
-        // Simulate the login process
         homePage.clickSignIn();
-
         signInPage.enterEmail("");
         signInPage.enterPassword(password);
         signInPage.clickSigIn();
 
         try {
-            alert = wait.until(ExpectedConditions.alertIsPresent());
-            String alertMessage = alert.getText();
-            alert.dismiss();
-            //check if alert is present if field is empty
-            softAssert.assertEquals(alertMessage,"Please fill out this field.", "\n Alerts doesn't match");
-            softAssert.assertAll();
+            //alert = wait.until(ExpectedConditions.alertIsPresent());
+            //String alertMessage = alert.getText();
+            String emptyFieldAlert = registerPage.getEmptyValidationMessageFirstname();
+            System.out.println("Validation message: " + emptyFieldAlert);
+            softAssert.assertEquals(emptyFieldAlert,"Please fill out this field.", "\n Alerts doesn't match");
         } catch (TimeoutException e) {
             System.out.println("\n Expected alert not found");
         }
 
         String expectedUserName = firstName + " " + lastName;
-        // Assertion to verify the logged-in user's name
-        Assert.assertEquals(homePage.getLoggedUserNameAndLastname(), expectedUserName, "The logged-in user's name should match the expected name.");
+        // Assertion to verify the logged-in user's name is not present because user can't be logged in empty fields
+        Assert.assertNotEquals(homePage.getLoggedUserNameAndLastname(), expectedUserName, "The logged-in user's name should match the expected name.");
+    }
+
+    @Test(dataProvider = "randomLoginData", dataProviderClass = CsvDataProvider.class)
+    public void loginIfPasswordIsEmpty(String firstName, String lastName, String email, String password) {
+        System.out.println("Testing login with: " + email + " / ' '");
+
+        homePage.clickSignIn();
+        signInPage.enterEmail(email);
+        signInPage.enterPassword("");
+        signInPage.clickSigIn();
+
+        try {
+            //alert = wait.until(ExpectedConditions.alertIsPresent());
+            //String alertMessage = alert.getText();
+            String emptyFieldAlert = registerPage.getEmptyValidationMessageFirstname();
+            System.out.println("Validation message: " + emptyFieldAlert);
+            softAssert.assertEquals(emptyFieldAlert,"Please fill out this field.", "\n Alerts doesn't match");
+        } catch (TimeoutException e) {
+            System.out.println("\n Expected alert not found");
+        }
+
+        String expectedUserName = firstName + " " + lastName;
+        // Assertion to verify the logged-in user's name is not present because user can't be logged in empty fields
+        Assert.assertNotEquals(homePage.getLoggedUserNameAndLastname(), expectedUserName, "The logged-in user's name should match the expected name.");
     }
 
 

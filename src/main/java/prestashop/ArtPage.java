@@ -6,6 +6,7 @@ import org.openqa.selenium.support.FindBy;
 
 import java.net.Inet4Address;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ArtPage extends BasePage{
     public ArtPage(WebDriver driver) {
@@ -38,6 +39,9 @@ public class ArtPage extends BasePage{
 
     @FindBy (css = ".js-product-miniature.product-miniature .price")
     protected List<WebElement> listOfPricesDisplayed;
+
+    @FindBy (css = ".js-product-miniature.product-miniature h2 > a")
+    protected List<WebElement> listOfProductNames;
 
     @FindBy (css = "section:nth-of-type(2) > .collapse .custom-checkbox")
     private WebElement filterBySelection;
@@ -90,8 +94,20 @@ public class ArtPage extends BasePage{
     @FindBy (css = ".js-search-filters-clear-all")
     protected WebElement clearFilters;
 
+    public List<String> getNamesOfDisplayedProducts(){
+        return listOfProductNames.stream().map(WebElement::getText).collect(Collectors.toList());
+    }
+
+    public List<String> getSortedProductList(){
+        return listOfProductNames.stream().map(WebElement::getText).sorted().collect(Collectors.toList());
+    }
+
     public void clickSortDropdownList() {
         sortDropDownList.click();
+    }
+
+    public void clickSortByNameAToZ(){
+        sortByNameAToZ.click();
     }
 
     public void clickClearAllFilters(){

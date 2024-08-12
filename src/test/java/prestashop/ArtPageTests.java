@@ -114,10 +114,15 @@ public class ArtPageTests extends TestSetup{
     }
 
     @Test
-    public void sortByNameAToZ(){
+    public void sortByNameAToZ() throws InterruptedException {
         homePage.clickArtLink();
+        System.out.println(artPage.getSortedProductList());
         artPage.clickSortDropdownList();
-
+        artPage.clickSortByNameAToZ();
+        Thread.sleep(200);
+        System.out.println(artPage.getNamesOfDisplayedProducts());
+        Assert.assertEquals(artPage.getSortedProductList(), artPage.getNamesOfDisplayedProducts(),
+                "Names or amount of sorted doesn't match");
     }
 //
 //    @Test

@@ -8,10 +8,9 @@ import java.io.IOException;
 import java.util.Map;
 
 public class RegisterTest extends TestSetup{
-
+    FakerUserDataGenerator userDataGenerator = new FakerUserDataGenerator();
+    Map<String, String> userData = userDataGenerator.generateUserDataToMap();
     private static final String CSV_FILE_PATH = "src/test/resources/validUserData.csv";
-    private final FakerUserDataGenerator userDataGenerator = new FakerUserDataGenerator();
-    private final Map<String, String> userData = userDataGenerator.generateUserDataToMap();
 
     @Test (priority = -1)
     public void registerValidUser() throws IOException, InterruptedException {
@@ -45,22 +44,23 @@ public class RegisterTest extends TestSetup{
     @Test
     public void failTestRegisterValidUser() throws InterruptedException {
         /*takes user data from FakerUserDataGenerator class. Runs registration test and intentionally fails.
-          To test if all functionality is working*/
+          To test if all functionality is working. This test don't save data to CSV file because it supposed to fail*/
 
         homePage.clickSignIn();
-        wait.until(ExpectedConditions.elementToBeClickable(signInPage.createAccountButton)).click();
-        //signInPage.clickCreateAccount();
+        //wait.until(ExpectedConditions.elementToBeClickable(signInPage.createAccountButton)).click();
+        signInPage.clickCreateAccount();
         registerPage.chooseSocialTitleMr();
         registerPage.enterFirstName(userData.get("firstname"));
-        System.out.println(userData.get("firstname"));
         registerPage.enterLastName(userData.get("lastname"));
-        System.out.println(userData.get("lastname"));
         registerPage.enterEmail(userData.get("email"));
-        System.out.println(userData.get("email"));
         registerPage.enterPassword(userData.get("password"));
-        System.out.println(userData.get("password"));
         registerPage.enterBirthDate(userData.get("birthdate"));
-        System.out.println(userData.get("birthdate"));
+        System.out.println("Testing with: \n===============================================");
+        System.out.println("Firstname: " + userData.get("firstname"));
+        System.out.println("Lastname: " + userData.get("lastname"));
+        System.out.println("Email: " + userData.get("email"));
+        System.out.println("Strong password: " + userData.get("password"));
+        System.out.println("Birthdate: " + userData.get("birthdate"));
         registerPage.checkTermsAndCond();
         registerPage.checkPrivacyAgreement();
         registerPage.clickSaveForm();
@@ -73,8 +73,8 @@ public class RegisterTest extends TestSetup{
     @Test
     public void checkAlertIfFirstNameIsEmpty() throws InterruptedException {
         homePage.clickSignIn();
-        wait.until(ExpectedConditions.elementToBeClickable(signInPage.createAccountButton)).click();
-        //signInPage.clickCreateAccount();
+        //wait.until(ExpectedConditions.elementToBeClickable(signInPage.createAccountButton)).click();
+        signInPage.clickCreateAccount();
         registerPage.chooseSocialTitleMr();
         registerPage.enterFirstName("");
         System.out.println(userData.get("Empty space"));

@@ -9,7 +9,6 @@ import java.util.Map;
 
 public class RegisterTest extends TestSetup{
     FakerUserDataGenerator userDataGenerator = new FakerUserDataGenerator();
-    Map<String, String> userData = userDataGenerator.generateUserDataToMap();
     private static final String CSV_FILE_PATH = "src/test/resources/validUserData.csv";
 
     @Test (priority = -1)
@@ -17,6 +16,7 @@ public class RegisterTest extends TestSetup{
         /*takes user data from FakerUserDataGenerator class, maps it. Runs registration test and saves valid
         user credentials to CSV file, that can be used for login tests.
         Priority is set to -1 to run this test first and create new user in CSV entry*/
+        Map<String, String> userData = userDataGenerator.generateUserDataToMap();
         userDataGenerator.saveUserDataToCSV(userData, CSV_FILE_PATH);
 
         homePage.clickSignIn();
@@ -39,14 +39,17 @@ public class RegisterTest extends TestSetup{
         //checks after successfully registration checks if Homepage displays same name and last name used to register.
         Assert.assertEquals(homePage.getLoggedUserNameAndLastname(),userData.get("firstname") + " " + userData.get("lastname"),
                  "Registered user name doesn't match");
+        homePage.clickLogout();
     }
 
     @Test
     public void failTestRegisterValidUser() throws InterruptedException {
         /*takes user data from FakerUserDataGenerator class. Runs registration test and intentionally fails.
           To test if all functionality is working. This test don't save data to CSV file because it supposed to fail*/
+        Map<String, String> userData = userDataGenerator.generateUserDataToMap();
 
         homePage.clickSignIn();
+        //Thread.sleep(200);
         //wait.until(ExpectedConditions.elementToBeClickable(signInPage.createAccountButton)).click();
         signInPage.clickCreateAccount();
         registerPage.chooseSocialTitleMr();
@@ -72,6 +75,8 @@ public class RegisterTest extends TestSetup{
 
     @Test
     public void checkAlertIfFirstNameIsEmpty() throws InterruptedException {
+        Map<String, String> userData = userDataGenerator.generateUserDataToMap();
+
         homePage.clickSignIn();
         //wait.until(ExpectedConditions.elementToBeClickable(signInPage.createAccountButton)).click();
         signInPage.clickCreateAccount();

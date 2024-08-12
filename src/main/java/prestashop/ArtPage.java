@@ -69,6 +69,58 @@ public class ArtPage extends BasePage{
     @FindBy (css = "[data-slider-min] p")
     private WebElement priceSliderValues;
 
+    @FindBy (css = "section:nth-of-type(6) > .collapse > li:nth-of-type(1) ")
+    private WebElement filterDimensions40x60;
+
+    @FindBy (css = "section:nth-of-type(3) > .collapse > li:nth-of-type(1) .magnitude")
+    private WebElement itemsInDimensions40x60;
+
+    @FindBy (css = "section:nth-of-type(6) > .collapse > li:nth-of-type(2)")
+    private WebElement filterDimensions60x90;
+
+    @FindBy (css = "section:nth-of-type(3) > .collapse > li:nth-of-type(2) .magnitude")
+    private WebElement itemsInDimensions60x90;
+
+    @FindBy (css = "section:nth-of-type(6) > .collapse > li:nth-of-type(3)")
+    private WebElement filterDimensions80x120;
+
+    @FindBy (css = "section:nth-of-type(3) > .collapse > li:nth-of-type(3) .magnitude")
+    private WebElement itemsInDimensions80x120;
+
+    @FindBy (css = ".js-search-filters-clear-all")
+    protected WebElement clearFilters;
+
+    public void clickSortDropdownList() {
+        sortDropDownList.click();
+    }
+
+    public void clickClearAllFilters(){
+        clearFilters.click();
+    }
+
+    public void clickFilterDimensions80x120(){
+        filterDimensions80x120.click();
+    }
+
+    public int getAmountOfProductDimension80x120() {
+        return Integer.parseInt(itemsInDimensions80x120.getText().replaceAll("[\\[\\]()]",""));
+    }
+
+    public void clickFilterDimensions60x90(){
+        filterDimensions60x90.click();
+    }
+
+    public int getAmountOfProductDimension60x90() {
+        return Integer.parseInt(itemsInDimensions60x90.getText().replaceAll("[\\[\\]()]",""));
+    }
+
+    public void clickFilterDimensions40x60(){
+        filterDimensions40x60.click();
+    }
+
+    public int getAmountOfProductDimension40x60() {
+        return Integer.parseInt(itemsInDimensions40x60.getText().replaceAll("[\\[\\]()]",""));
+    }
 
     public int priceSliderWidth (){
         return priceSlider.getSize().getWidth();

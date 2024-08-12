@@ -90,16 +90,35 @@ public class ArtPageTests extends TestSetup{
         Assert.assertEquals(displayedNumberOfProducts, numberOfAvailableProducts,
                 "Displayed amount of items does not match");
     }
-//
-//    @Test
-//    public void filterByDimensions(){
-//
-//    }
-//
-//    @Test
-//    public void sortByNameAToZ(){
-//
-//    }
+
+    @Test
+    public void filterByDimensions() throws InterruptedException {
+        homePage.clickArtLink();
+        artPage.clickFilterDimensions40x60();
+        //Thread.sleep(200);
+        softAssert.assertEquals(artPage.getAmountOfProductDimension40x60(), artPage.getAmountOfItemsDisplayed(),
+                "Displayed amount of items does not match");
+        //wait.until(ExpectedConditions.elementToBeClickable(artPage.clearFilters)).click();
+        artPage.clickClearAllFilters();
+        artPage.clickFilterDimensions60x90();
+        //Thread.sleep(200);
+        softAssert.assertEquals(artPage.getAmountOfProductDimension60x90(), artPage.getAmountOfItemsDisplayed(),
+                "Displayed amount of items does not match");
+        //wait.until(ExpectedConditions.elementToBeClickable(artPage.clearFilters)).click();
+        artPage.clickClearAllFilters();
+        artPage.clickFilterDimensions80x120();
+        //Thread.sleep(200);
+        softAssert.assertEquals(artPage.getAmountOfProductDimension80x120(), artPage.getAmountOfItemsDisplayed(),
+                "Displayed amount of items does not match");
+        softAssert.assertAll();
+    }
+
+    @Test
+    public void sortByNameAToZ(){
+        homePage.clickArtLink();
+        artPage.clickSortDropdownList();
+
+    }
 //
 //    @Test
 //    public void sortByNameZToA(){

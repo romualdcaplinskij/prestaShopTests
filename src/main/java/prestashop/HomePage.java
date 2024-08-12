@@ -25,6 +25,13 @@ public class HomePage extends BasePage {
     @FindBy (css = "[title] .hidden-sm-down")
     WebElement registeredUserNameAndLastname;
 
+    @FindBy (css = ".hidden-sm-down.logout")
+    WebElement logoutButton;
+
+    public void clickLogout(){
+        logoutButton.click();
+    }
+
     public String getLoggedUserNameAndLastname() {
         wait.until(ExpectedConditions.visibilityOf(registeredUserNameAndLastname));
      return registeredUserNameAndLastname.getText();

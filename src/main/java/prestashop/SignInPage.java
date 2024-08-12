@@ -22,7 +22,7 @@ public class SignInPage extends BasePage{
     @FindBy (css = "#submit-login")
     WebElement signInButton;
 
-    @FindBy (css = "[data-link-action='display-register-form']")
+    @FindBy (xpath = "//div[@id='content']//a[@href='http://192.168.1.126/registration']")
     WebElement createAccountButton;
 
     public void enterEmail (String email){

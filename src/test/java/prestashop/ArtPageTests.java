@@ -1,16 +1,12 @@
 package prestashop;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.ElementNotInteractableException;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.testng.asserts.Assertion;
 
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
+
 
 
 public class ArtPageTests extends TestSetup{
@@ -116,27 +112,53 @@ public class ArtPageTests extends TestSetup{
     @Test
     public void sortByNameAToZ() throws InterruptedException {
         homePage.clickArtLink();
-        System.out.println(artPage.getSortedProductList());
+        System.out.println(artPage.getSortedAtoZProductList());
         artPage.clickSortDropdownList();
         artPage.clickSortByNameAToZ();
         Thread.sleep(200);
         System.out.println(artPage.getNamesOfDisplayedProducts());
-        Assert.assertEquals(artPage.getSortedProductList(), artPage.getNamesOfDisplayedProducts(),
+        Assert.assertEquals(artPage.getSortedAtoZProductList(), artPage.getNamesOfDisplayedProducts(),
                 "Names or amount of sorted doesn't match");
     }
-//
-//    @Test
-//    public void sortByNameZToA(){
-//
-//    }
-//
-//    @Test
-//    public void sortByPriceLowToHigh(){
-//
-//    }
-//
-//    @Test
-//    public void sortByPriceHighToLow(){
-    //}
+
+    @Test
+    public void sortByNameZToA() throws InterruptedException {
+        homePage.clickArtLink();
+        System.out.println(artPage.getSortedZtoAProductList());
+        artPage.clickSortDropdownList();
+        artPage.clickSortByNameZtoA();
+        Thread.sleep(200);
+        System.out.println(artPage.getNamesOfDisplayedProducts());
+        Assert.assertEquals(artPage.getSortedZtoAProductList(), artPage.getNamesOfDisplayedProducts(),
+                "Names or amount of sorted doesn't match");
+    }
+
+    @Test
+    public void sortByPriceLowToHigh() throws InterruptedException {
+        homePage.clickArtLink();
+        System.out.println(artPage.getListOfPricesDisplayed());
+        System.out.println(artPage.getPricesOfSortedDisplayedProductsLowToHigh());
+        artPage.clickSortDropdownList();
+        artPage.clickSortByPriceLowToHigh();
+        Thread.sleep(200);
+        System.out.println(artPage.getListOfPricesDisplayed());
+        Assert.assertEquals(artPage.getPricesOfSortedDisplayedProductsLowToHigh(),
+                artPage.getListOfPricesDisplayed(),
+                "List of sorted prices does not match");
+    }
+
+    @Test
+    public void sortByPriceHighToLow() throws InterruptedException {
+        homePage.clickArtLink();
+        System.out.println(artPage.getListOfPricesDisplayed());
+        System.out.println(artPage.getPricesOfSortedDisplayedProductsHighToLow());
+        artPage.clickSortDropdownList();
+        artPage.clickSortByPriceHighToLow();
+        Thread.sleep(200);
+        System.out.println(artPage.getListOfPricesDisplayed());
+        Assert.assertEquals(artPage.getPricesOfSortedDisplayedProductsHighToLow(),
+                artPage.getListOfPricesDisplayed(),
+                "List of sorted prices does not match");
+    }
 
 }

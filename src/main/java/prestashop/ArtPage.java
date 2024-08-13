@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.net.Inet4Address;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,7 +26,7 @@ public class ArtPage extends BasePage{
     @FindBy (css = ".dropdown-menu > a:nth-of-type(5)")
     private WebElement sortByPriceLowToHigh;
 
-    @FindBy (css = ".dropdown-menu > a:nth-of-type(3)")
+    @FindBy (css = ".dropdown-menu > a:nth-of-type(6)")
     private WebElement sortByPriceHighToLow;
 
     @FindBy (css = "section:nth-of-type(1) > .collapse ._gray-darker.js-search-link.search-link")
@@ -94,12 +95,48 @@ public class ArtPage extends BasePage{
     @FindBy (css = ".js-search-filters-clear-all")
     protected WebElement clearFilters;
 
+    public void clickSortByPriceHighToLow(){
+        sortByPriceHighToLow.click();
+    }
+
+
+    public void clickSortByPriceLowToHigh(){
+        sortByPriceLowToHigh.click();
+    }
+
+    public List<Double> getPricesOfSortedDisplayedProductsLowToHigh(){
+        return getListOfPricesDisplayed()
+                .stream()
+                .sorted()
+                .toList();
+    }
+
+    public List<Double> getPricesOfSortedDisplayedProductsHighToLow(){
+        return getListOfPricesDisplayed()
+                .stream()
+                .sorted(Comparator.reverseOrder())     //sort doubles from high to low
+                .toList();
+    }
+
+    public List<Double> getListOfPricesDisplayed(){
+        return listOfPricesDisplayed.stream()
+                .map(WebElement::getText)                           //gets test from webelement
+                .map(price ->price.replace("$",""))//removes $
+                .map(Double::parseDouble)                           //parses do Double
+                .toList();                                          //back to list
+    }
+
+
     public List<String> getNamesOfDisplayedProducts(){
         return listOfProductNames.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
-    public List<String> getSortedProductList(){
+    public List<String> getSortedAtoZProductList(){
         return listOfProductNames.stream().map(WebElement::getText).sorted().collect(Collectors.toList());
+    }
+
+    public List<String> getSortedZtoAProductList(){
+        return listOfProductNames.stream().map(WebElement::getText).sorted(Comparator.reverseOrder()).toList();
     }
 
     public void clickSortDropdownList() {
@@ -108,6 +145,10 @@ public class ArtPage extends BasePage{
 
     public void clickSortByNameAToZ(){
         sortByNameAToZ.click();
+    }
+
+    public void clickSortByNameZtoA(){
+        sortByNameZToA.click();
     }
 
     public void clickClearAllFilters(){

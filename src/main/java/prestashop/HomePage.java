@@ -1,14 +1,20 @@
 package prestashop;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HomePage extends BasePage {
     public HomePage(WebDriver driver) {
         super(driver);
     }
+
+    int iterator;
 
     @FindBy(css = ".user-info .hidden-sm-down")
     WebElement signInButton;
@@ -27,6 +33,24 @@ public class HomePage extends BasePage {
 
     @FindBy (css = ".hidden-sm-down.logout")
     WebElement logoutButton;
+
+
+    @FindBy (css = ".products.row [class='js-product product col-xs-12 col-sm-6 col-lg-4 col-xl-3'] " +
+            ".wishlist-button-add")
+    List<WebElement> wishlistAddButton;
+
+
+    public void clickUserProfile(){
+        registeredUserNameAndLastname.click();
+    }
+
+
+    public void iterateAndClickProductCard(int iterator){
+        String cssSelector = ".products.row [data-id-product='"+ iterator + "']";
+        WebElement productCard = driver.findElement(By.cssSelector(cssSelector));
+        productCard.click();
+    }
+
 
     public void clickLogout(){
         logoutButton.click();

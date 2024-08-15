@@ -15,12 +15,15 @@ public class TestSetup {
     WebDriver driver;
     HomePage homePage;
     SignInPage signInPage;
+    UserAccount userAccount;
     RegisterPage registerPage;
     ArtPage artPage;
     SoftAssert softAssert;
     WebDriverWait wait;
     Alert alert;
     Actions actions;
+    WishlistPage wishlistPage;
+    ProductPage productPage;
 
     @BeforeClass
     public void setDriver(){
@@ -34,8 +37,11 @@ public class TestSetup {
 
         homePage = new HomePage(driver);
         signInPage = new SignInPage(driver);
+        userAccount = new UserAccount(driver);
         registerPage = new RegisterPage(driver);
         artPage = new ArtPage(driver);
+        wishlistPage = new WishlistPage(driver);
+        productPage = new ProductPage(driver);
     }
 
     @AfterClass

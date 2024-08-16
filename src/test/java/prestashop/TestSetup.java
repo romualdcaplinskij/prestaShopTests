@@ -13,17 +13,19 @@ import java.time.Duration;
 public class TestSetup {
 
     WebDriver driver;
+    WebDriverWait wait;
     HomePage homePage;
     SignInPage signInPage;
     UserAccount userAccount;
     RegisterPage registerPage;
     ArtPage artPage;
     SoftAssert softAssert;
-    WebDriverWait wait;
     Alert alert;
     Actions actions;
     WishlistPage wishlistPage;
     ProductPage productPage;
+    NewAddressPage newAddressPage;
+    AddressesPage addressesPage;
 
     @BeforeClass
     public void setDriver(){
@@ -42,6 +44,8 @@ public class TestSetup {
         artPage = new ArtPage(driver);
         wishlistPage = new WishlistPage(driver);
         productPage = new ProductPage(driver);
+        newAddressPage = new NewAddressPage(driver);
+        addressesPage = new AddressesPage(driver);
     }
 
     @AfterClass
